@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   CSS Variables
+   ============================================================ */
+:root {
+  --font-inter: 'Inter', system-ui, sans-serif;
+}
+
+/* ============================================================
+   Base Styles
+   ============================================================ */
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply text-slate-900 dark:text-slate-100;
+    overscroll-behavior: none;
+  }
+
+  /* Arabic font adjustments */
+  [dir="rtl"] {
+    font-family: 'Segoe UI', 'Tahoma', 'Cairo', system-ui, sans-serif;
+    letter-spacing: 0;
+  }
+
+  /* Smooth scrolling on mobile */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Remove number input arrows */
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+}
+
+/* ============================================================
+   Component Styles
+   ============================================================ */
+@layer components {
+  /* Page container */
+  .page-container {
+    @apply max-w-lg mx-auto px-4 py-4;
+  }
+
+  /* Card base */
+  .card {
+    @apply bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm;
+  }
+
+  /* Input base */
+  .input-base {
+    @apply w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700;
+    @apply bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100;
+    @apply placeholder:text-slate-400 dark:placeholder:text-slate-500;
+    @apply focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent;
+    @apply transition-all duration-150;
+    @apply text-base; /* Prevents iOS zoom */
+  }
+
+  /* Label base */
+  .label-base {
+    @apply block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5;
+  }
+
+  /* Stat card */
+  .stat-card {
+    @apply card p-4 flex flex-col items-center gap-1 text-center;
+  }
+
+  /* Section title */
+  .section-title {
+    @apply text-lg font-black text-slate-900 dark:text-white mb-3;
+  }
+
+  /* Badge pill */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold;
+  }
+}
+
+/* ============================================================
+   Utility Overrides
+   ============================================================ */
+@layer utilities {
+  /* Safe area spacing */
+  .pb-safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .pt-safe-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  /* Hide scrollbar but allow scrolling */
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Shimmer animation */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.08) 50%,
+      transparent 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* Smooth gradient overlays */
+  .gradient-mask-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+}
+
+/* ============================================================
+   Dark Mode Transitions
+   ============================================================ */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+/* Exclude animations from color transitions */
+.animate-spin,
+.animate-bounce,
+.animate-pulse,
+[class*='animate-'] {
+  transition: none;
+}
+
+/* ============================================================
+   Custom Scrollbar (Desktop)
+   ============================================================ */
+@media (hover: hover) {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 dark:bg-slate-600 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400 dark:bg-slate-500;
+  }
+}
