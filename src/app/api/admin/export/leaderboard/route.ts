@@ -42,8 +42,8 @@ export async function GET() {
       const s = pointsMap.get((u as any).id) ?? { total: 0, exact: 0, winner: 0 };
       return { ...(u as any), ...s };
     })
-    .sort((a, b) => b.total - a.total)
-    .map((u, i) => ({
+    .sort((a: any, b: any) => b.total - a.total)
+    .map((u: any, i: number) => ({
       Rank: i + 1,
       'Full Name': (u as any).full_name,
       Nickname: (u as any).nickname ?? '-',
