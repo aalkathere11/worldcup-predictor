@@ -59,8 +59,8 @@
     "final": "النهائي",
     "group_stage": "دور المجموعات",
     "countdown_label": "يغلق التنبؤ خلال",
-    "predictions_closed": "تم إغلاق التنبؤات",
-    "prediction_saved": "تم حفظ تنبؤك بنجاح",
+    "predictions_closed": "تم إغلاق التوقعات",
+    "prediction_saved": "تم حفظ توقعك بنجاح",
     "save_prediction": "حفظ التنبؤ",
     "saving": "جارٍ الحفظ...",
     "saved_successfully": "تم الحفظ بنجاح ✓",
@@ -71,7 +71,7 @@
     "match_number": "مباراة",
     "no_prediction": "لم تقدم تنبؤاً بعد",
     "draw_not_allowed": "لا يُسمح بالتعادل في هذه الجولة",
-    "prediction_updated": "تم تحديث تنبؤك"
+    "prediction_updated": "تم تحديث توقعك"
   },
   "predictions": {
     "exact": "نتيجة مضبوطة",
