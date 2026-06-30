@@ -40,7 +40,7 @@ export async function GET() {
   const rows = (users ?? [])
     .map((u) => {
       const s = pointsMap.get((u as any).id) ?? { total: 0, exact: 0, winner: 0 };
-      return { ...u, ...s };
+      return { ...(u as any), ...s };
     })
     .sort((a, b) => b.total - a.total)
     .map((u, i) => ({
