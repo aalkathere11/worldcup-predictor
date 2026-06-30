@@ -4,8 +4,8 @@ import { createClient, createAdminClient } from '@/lib/supabase/server';
 async function requireAdmin(supabase: ReturnType<typeof createClient>) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
-  const { data } = await supabase.from('users').select('role').eq('id', user.id).single();
-  return data?.role === 'admin' ? user : null;
+  const { data } = await (supabase as any).from('users').select('role').eq('id', user.id).single();
+  return (data as any)?.role === 'admin' ? user : null;
 }
 
 export async function DELETE(
@@ -26,11 +26,11 @@ export async function DELETE(
   const adminClient = createAdminClient();
 
   // Delete predictions first (cascade)
-  await adminClient.from('predictions').delete().eq('user_id', userId);
-  await adminClient.from('achievements').delete().eq('user_id', userId);
+  await (adminClient as any).from('predictions').delete().eq('user_id', userId);
+  await (adminClient as any).from('achievements').delete().eq('user_id', userId);
 
   // Delete profile
-  await adminClient.from('users').delete().eq('id', userId);
+  await (adminClient as any).from('users').delete().eq('id', userId);
 
   // Delete auth user
   const { error } = await adminClient.auth.admin.deleteUser(userId);

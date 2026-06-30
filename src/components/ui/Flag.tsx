@@ -35,3 +35,4 @@ export function Flag({ code, size = 'md', className, alt }: FlagProps) {
     </div>
   );
 }
+

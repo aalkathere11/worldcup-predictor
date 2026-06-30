@@ -69,3 +69,4 @@ export function TopBar({ title }: TopBarProps) {
     </header>
   );
 }
+

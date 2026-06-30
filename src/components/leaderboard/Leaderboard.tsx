@@ -202,3 +202,4 @@ export function Leaderboard({ entries, currentUserId }: LeaderboardProps) {
     </div>
   );
 }
+

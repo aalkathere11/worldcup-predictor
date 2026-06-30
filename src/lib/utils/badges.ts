@@ -62,3 +62,4 @@ export const BADGES: BadgeDefinition[] = [
 export function getBadgeByKey(key: string): BadgeDefinition | undefined {
   return BADGES.find((b) => b.key === key);
 }
+

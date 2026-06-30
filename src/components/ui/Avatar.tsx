@@ -84,3 +84,4 @@ export function Avatar({ src, name, size = 'md', className, ring, ringColor }: A
     </div>
   );
 }
+

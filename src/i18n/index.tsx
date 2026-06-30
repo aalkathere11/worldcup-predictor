@@ -128,3 +128,4 @@ export function formatMakkahTime(isoString: string, locale: Locale): string {
     hour12: false,
   });
 }
+

@@ -6,8 +6,8 @@ import { formatMatchDate, formatMatchTime } from '@/lib/utils';
 async function requireAdmin(supabase: ReturnType<typeof createClient>) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
-  const { data } = await supabase.from('users').select('role').eq('id', user.id).single();
-  return data?.role === 'admin' ? user : null;
+  const { data } = await (supabase as any).from('users').select('role').eq('id', user.id).single();
+  return (data as any)?.role === 'admin' ? user : null;
 }
 
 export async function GET() {
@@ -68,3 +68,4 @@ export async function GET() {
     },
   });
 }
+

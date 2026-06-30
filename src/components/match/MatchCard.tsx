@@ -292,3 +292,4 @@ export function MatchCard({ match, prediction, onPredictionSaved }: MatchCardPro
     </div>
   );
 }
+

@@ -92,3 +92,4 @@ export function BottomNav({ isAdmin }: BottomNavProps) {
     </nav>
   );
 }
+

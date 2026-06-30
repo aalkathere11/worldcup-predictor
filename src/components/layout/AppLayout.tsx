@@ -31,3 +31,4 @@ export function AppLayout({ children, title }: AppLayoutProps) {
     </div>
   );
 }
+

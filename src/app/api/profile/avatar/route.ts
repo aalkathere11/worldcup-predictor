@@ -58,3 +58,4 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ avatar_url: avatarUrl });
 }
+

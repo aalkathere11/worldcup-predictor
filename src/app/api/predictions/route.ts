@@ -98,3 +98,4 @@ async function grantAchievementIfNew(
       .insert({ user_id: userId, badge_key: badgeKey });
   }
 }
+

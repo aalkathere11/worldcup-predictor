@@ -75,7 +75,7 @@ export default function SetupPage() {
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
-      await supabase.from('users').update({ force_password_change: false, force_avatar_upload: false }).eq('id', user.id);
+      await (supabase as any).from('users').update({ force_password_change: false, force_avatar_upload: false }).eq('id', user.id);
     }
     toast.success(t('auth.setup_complete'));
     router.replace('/dashboard');
@@ -191,3 +191,4 @@ export default function SetupPage() {
     </div>
   );
 }
+

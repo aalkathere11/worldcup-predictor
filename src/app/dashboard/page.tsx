@@ -236,3 +236,4 @@ function NextMatchCard({ match, locale }: { match: Match; locale: string }) {
     </div>
   );
 }
+

@@ -37,3 +37,4 @@ export function useTheme() {
 
   return { theme, setTheme, toggle, mounted, isDark: theme === 'dark' };
 }
+

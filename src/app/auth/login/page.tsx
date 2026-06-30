@@ -43,7 +43,7 @@ export default function LoginPage() {
         .select('force_password_change, force_avatar_upload')
         .eq('id', user.id)
         .single();
-      if (profile?.force_password_change || profile?.force_avatar_upload) {
+      if ((profile as any)?.force_password_change || (profile as any)?.force_avatar_upload) {
         router.replace('/auth/setup');
       } else {
         router.replace('/dashboard');
@@ -115,3 +115,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

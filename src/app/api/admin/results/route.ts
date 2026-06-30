@@ -5,8 +5,8 @@ import { calculatePoints } from '@/lib/utils';
 async function requireAdmin(supabase: ReturnType<typeof createClient>) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
-  const { data } = await supabase.from('users').select('role').eq('id', user.id).single();
-  return data?.role === 'admin' ? user : null;
+  const { data } = await (supabase as any).from('users').select('role').eq('id', user.id).single();
+  return (data as any)?.role === 'admin' ? user : null;
 }
 
 export async function POST(req: NextRequest) {
@@ -116,6 +116,7 @@ async function grantIfNew(
     .single();
 
   if (!data) {
-    await client.from('achievements').insert({ user_id: userId, badge_key: badgeKey });
+    await (client as any).from('achievements').insert({ user_id: userId, badge_key: badgeKey });
   }
 }
+

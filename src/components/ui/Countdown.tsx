@@ -67,3 +67,4 @@ export function Countdown({ kickoffAt, className }: CountdownProps) {
     </div>
   );
 }
+
