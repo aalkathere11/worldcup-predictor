@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   const adminClient = createAdminClient();
 
   // Update match result
-  const { error: matchError } = await adminClient
+  const { error: matchError } = await (adminClient as any)
     .from('matches')
     .update({
       score_a,
