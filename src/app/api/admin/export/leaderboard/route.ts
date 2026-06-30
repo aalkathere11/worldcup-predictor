@@ -16,12 +16,12 @@ export async function GET() {
 
   const adminClient = createAdminClient();
 
-  const { data: users } = await adminClient
+  const { data: users } = await (adminClient as any)
     .from('users')
     .select('id, full_name, nickname, email')
     .eq('role', 'user');
 
-  const { data: predictions } = await adminClient
+  const { data: predictions } = await (adminClient as any)
     .from('predictions')
     .select('user_id, points')
     .not('points', 'is', null);
@@ -47,7 +47,7 @@ export async function GET() {
       Rank: i + 1,
       'Full Name': (u as any).full_name,
       Nickname: (u as any).nickname ?? '-',
-      Email: u.email,
+      Email: (u as any).email,
       'Total Points': u.total,
       'Exact Predictions': u.exact,
       'Winner Predictions': u.winner,

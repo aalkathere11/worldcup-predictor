@@ -173,7 +173,7 @@ function AdminUsersTab() {
                   <p className="font-semibold text-sm text-slate-800 dark:text-slate-100 truncate">
                     {(u as any).full_name}
                   </p>
-                  <p className="text-xs text-slate-400 truncate">{u.email}</p>
+                  <p className="text-xs text-slate-400 truncate">{(u as any).email}</p>
                 </div>
                 <div className="flex gap-1.5">
                   <button

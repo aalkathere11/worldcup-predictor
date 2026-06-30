@@ -5,15 +5,12 @@ function fixFile(filePath) {
   let content = fs.readFileSync(filePath, 'utf8');
   const original = content;
   
-  content = content.replace(/(\bsupabase\b)\s*\n\s*\.from\(/g, '($1 as any)\n    .from(');
-  content = content.replace(/(\bsupabase\b)\.from\(/g, '($1 as any).from(');
-  content = content.replace(/(\badminClient\b)\.from\(/g, '($1 as any).from(');
-  content = content.replace(/(\bclient\b)\.from\(/g, '($1 as any).from(');
-  content = content.replace(/\bdata\?\.(role|force_password_change|force_avatar_upload)\b/g, '(data as any)?.$1');
-  content = content.replace(/\bprofile\?\.(role|force_password_change|force_avatar_upload)\b/g, '(profile as any)?.$1');
-  content = content.replace(/\bp\.(user_id|points)\b/g, '(p as any).$1');
-  content = content.replace(/\bu\.(id|full_name|nickname|avatar_url)\b/g, '(u as any).$1');
-  content = content.replace(/\bpred\.(user_id|points)\b/g, '(pred as any).$1');
+  content = content.replace(/\b(supabase|adminClient|client)\b\.from\(/g, '($1 as any).from(');
+  content = content.replace(/\b(supabase|adminClient|client)\b\s*\n\s*\.from\(/g, '($1 as any)\n    .from(');
+  content = content.replace(/\b(data|profile|pred|p|u)\?\.(role|force_password_change|force_avatar_upload|user_id|points|full_name|nickname|email|score_a|score_b|id)\b/g, '($1 as any)?.$2');
+  content = content.replace(/\b(p|u|pred)\.(user_id|points|full_name|nickname|email|score_a|score_b|id|user|match)\b/g, '($1 as any).$2');
+  content = content.replace(/return \{ \.\.\.(u|p|pred)(,|\s)/g, 'return { ...($1 as any)$2');
+  content = content.replace(/\$\{(p|u|pred)\.(score_a|score_b|points|user_id)\}/g, '${($1 as any).$2}');
 
   if (content !== original) {
     fs.writeFileSync(filePath, content, 'utf8');

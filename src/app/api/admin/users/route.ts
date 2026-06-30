@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
   if (authError) return NextResponse.json({ error: authError.message }, { status: 500 });
 
   // Create profile
-  const { data: profile, error: profileError } = await adminClient
+  const { data: profile, error: profileError } = await (adminClient as any)
     .from('users')
     .insert({
       id: authData.user.id,

@@ -37,7 +37,7 @@ export async function POST(
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   // Force user to change password on next login
-  await adminClient
+  await (adminClient as any)
     .from('users')
     .update({ force_password_change: true })
     .eq('id', userId);

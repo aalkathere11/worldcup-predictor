@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
   if (matchError) return NextResponse.json({ error: matchError.message }, { status: 500 });
 
   // Fetch all predictions for this match
-  const { data: predictions } = await adminClient
+  const { data: predictions } = await (adminClient as any)
     .from('predictions')
     .select('id, score_a, score_b')
     .eq('match_id', match_id);
@@ -46,15 +46,15 @@ export async function POST(req: NextRequest) {
 
   // Calculate and update points for each prediction
   const updates = predictions.map((p) => ({
-    id: p.id,
-    points: calculatePoints(p.score_a, p.score_b, score_a, score_b),
+    id: (p as any).id,
+    points: calculatePoints((p as any).score_a, (p as any).score_b, score_a, score_b),
     updated_at: new Date().toISOString(),
   }));
 
   // Batch update
   for (const update of updates) {
-    await adminClient
-      .from('predictions')
+    await (adminClient as any)
+    .from('predictions')
       .update({ points: update.points, updated_at: update.updated_at })
       .eq('id', update.id);
   }
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
 }
 
 async function checkAndGrantAchievements(adminClient: ReturnType<typeof createAdminClient>) {
-  const { data: users } = await adminClient
+  const { data: users } = await (adminClient as any)
     .from('users')
     .select('id')
     .eq('role', 'user');
@@ -74,8 +74,8 @@ async function checkAndGrantAchievements(adminClient: ReturnType<typeof createAd
   if (!users) return;
 
   for (const user of users) {
-    const { data: preds } = await adminClient
-      .from('predictions')
+    const { data: preds } = await (adminClient as any)
+    .from('predictions')
       .select('points')
       .eq('user_id', user.id)
       .not('points', 'is', null);
@@ -108,7 +108,7 @@ async function grantIfNew(
   userId: string,
   badgeKey: string
 ) {
-  const { data } = await client
+  const { data } = await (client as any)
     .from('achievements')
     .select('id')
     .eq('user_id', userId)

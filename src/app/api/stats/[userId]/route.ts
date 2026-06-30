@@ -48,7 +48,7 @@ export async function GET(
     else if ((p as any).points === 1) winner_predictions++;
     else wrong_predictions++;
 
-    const round = (p.match as { round: string })?.round ?? 'Unknown';
+    const round = ((p as any).match as { round: string })?.round ?? 'Unknown';
     roundMap.set(round, (roundMap.get(round) ?? 0) + (p as any).points);
   }
 

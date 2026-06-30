@@ -18,7 +18,7 @@ export async function GET() {
   const adminClient = createAdminClient();
 
   // Fetch predictions with user and match info
-  const { data: predictions } = await adminClient
+  const { data: predictions } = await (adminClient as any)
     .from('predictions')
     .select(`
       *,
