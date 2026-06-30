@@ -28,8 +28,8 @@ export async function GET() {
     .order('created_at', { ascending: true });
 
   const rows = (predictions ?? []).map((p) => {
-    const user = p.user as { full_name: string; nickname: string; email: string } | null;
-    const match = p.match as {
+    const user = (p as any).user as { full_name: string; nickname: string; email: string } | null;
+    const match = (p as any).match as {
       round: string; team_a: string; team_b: string;
       kickoff_at: string; score_a: number | null; score_b: number | null;
     } | null;
