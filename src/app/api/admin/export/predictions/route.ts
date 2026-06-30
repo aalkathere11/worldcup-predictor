@@ -42,7 +42,7 @@ export async function GET() {
       'Match': `${match?.team_a ?? '-'} vs ${match?.team_b ?? '-'}`,
       'Date': match?.kickoff_at ? formatMatchDate(match.kickoff_at, 'en') : '-',
       'Time (Makkah)': match?.kickoff_at ? formatMatchTime(match.kickoff_at, 'en') : '-',
-      'Predicted Score': `${p.score_a} - ${p.score_b}`,
+      'Predicted Score': `${(p as any).score_a} - ${(p as any).score_b}`,
       'Actual Score': match?.score_a !== null ? `${match!.score_a} - ${match!.score_b}` : 'Pending',
       'Points': (p as any).points !== null ? (p as any).points : 'Pending',
     };
