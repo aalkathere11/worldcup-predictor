@@ -82,9 +82,9 @@ async function checkAndGrantAchievements(adminClient: ReturnType<typeof createAd
 
     if (!preds) continue;
 
-    const correctCount = preds.filter((p) => p.points !== null && p.points > 0).length;
-    const winnerCount = preds.filter((p) => p.points === 1 || p.points === 2).length;
-    const exactCount = preds.filter((p) => p.points === 2).length;
+    const correctCount = preds.filter((p) => (p as any).points !== null && (p as any).points > 0).length;
+    const winnerCount = preds.filter((p) => (p as any).points === 1 || (p as any).points === 2).length;
+    const exactCount = preds.filter((p) => (p as any).points === 2).length;
 
     // first_correct
     if (correctCount >= 1) await grantIfNew(adminClient, user.id, 'first_correct');
@@ -92,7 +92,7 @@ async function checkAndGrantAchievements(adminClient: ReturnType<typeof createAd
     if (winnerCount >= 10) await grantIfNew(adminClient, user.id, 'ten_winners');
 
     // Check streak of 5
-    const sorted = preds.map((p) => p.points ?? 0);
+    const sorted = preds.map((p) => (p as any).points ?? 0);
     let maxStreak = 0;
     let streak = 0;
     for (const pts of sorted) {

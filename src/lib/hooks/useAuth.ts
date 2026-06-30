@@ -30,8 +30,8 @@ export function useAuth(): AuthState {
         return;
       }
 
-      const { data: profile } = await supabase
-        .from('users')
+      const { data: profile } = await (supabase as any)
+    .from('users')
         .select('*')
         .eq('id', authUser.id)
         .single();
@@ -39,7 +39,7 @@ export function useAuth(): AuthState {
       setState({
         user: profile,
         loading: false,
-        isAdmin: profile?.role === 'admin',
+        isAdmin: (profile as any)?.role === 'admin',
       });
     }
 

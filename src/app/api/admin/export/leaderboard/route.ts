@@ -28,25 +28,25 @@ export async function GET() {
 
   const pointsMap = new Map<string, { total: number; exact: number; winner: number }>();
   for (const p of predictions ?? []) {
-    if (!pointsMap.has(p.user_id)) {
-      pointsMap.set(p.user_id, { total: 0, exact: 0, winner: 0 });
+    if (!pointsMap.has((p as any).user_id)) {
+      pointsMap.set((p as any).user_id, { total: 0, exact: 0, winner: 0 });
     }
-    const s = pointsMap.get(p.user_id)!;
-    s.total += p.points ?? 0;
-    if (p.points === 2) s.exact++;
-    else if (p.points === 1) s.winner++;
+    const s = pointsMap.get((p as any).user_id)!;
+    s.total += (p as any).points ?? 0;
+    if ((p as any).points === 2) s.exact++;
+    else if ((p as any).points === 1) s.winner++;
   }
 
   const rows = (users ?? [])
     .map((u) => {
-      const s = pointsMap.get(u.id) ?? { total: 0, exact: 0, winner: 0 };
+      const s = pointsMap.get((u as any).id) ?? { total: 0, exact: 0, winner: 0 };
       return { ...u, ...s };
     })
     .sort((a, b) => b.total - a.total)
     .map((u, i) => ({
       Rank: i + 1,
-      'Full Name': u.full_name,
-      Nickname: u.nickname ?? '-',
+      'Full Name': (u as any).full_name,
+      Nickname: (u as any).nickname ?? '-',
       Email: u.email,
       'Total Points': u.total,
       'Exact Predictions': u.exact,

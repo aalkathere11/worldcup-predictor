@@ -44,7 +44,7 @@ export async function GET() {
       'Time (Makkah)': match?.kickoff_at ? formatMatchTime(match.kickoff_at, 'en') : '-',
       'Predicted Score': `${p.score_a} - ${p.score_b}`,
       'Actual Score': match?.score_a !== null ? `${match!.score_a} - ${match!.score_b}` : 'Pending',
-      'Points': p.points !== null ? p.points : 'Pending',
+      'Points': (p as any).points !== null ? (p as any).points : 'Pending',
     };
   });
 

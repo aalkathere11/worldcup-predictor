@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Update force_password_change flag
-  await supabase
+  await (supabase as any)
     .from('users')
     .update({ force_password_change: false })
     .eq('id', user.id);

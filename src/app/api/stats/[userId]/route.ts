@@ -13,18 +13,18 @@ export async function GET(
   const { userId } = params;
 
   // Users can only view their own stats unless admin
-  const { data: profile } = await supabase
+  const { data: profile } = await (supabase as any)
     .from('users')
     .select('role')
     .eq('id', user.id)
     .single();
 
-  if (userId !== user.id && profile?.role !== 'admin') {
+  if (userId !== user.id && (profile as any)?.role !== 'admin') {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
   // Fetch all predictions with match data
-  const { data: predictions, error } = await supabase
+  const { data: predictions, error } = await (supabase as any)
     .from('predictions')
     .select('*, match:matches(round, kickoff_at)')
     .eq('user_id', userId);
@@ -42,14 +42,14 @@ export async function GET(
   const roundMap = new Map<string, number>();
 
   for (const p of preds) {
-    if (p.points === null) continue; // no result yet
-    total_points += p.points;
-    if (p.points === 2) exact_predictions++;
-    else if (p.points === 1) winner_predictions++;
+    if ((p as any).points === null) continue; // no result yet
+    total_points += (p as any).points;
+    if ((p as any).points === 2) exact_predictions++;
+    else if ((p as any).points === 1) winner_predictions++;
     else wrong_predictions++;
 
     const round = (p.match as { round: string })?.round ?? 'Unknown';
-    roundMap.set(round, (roundMap.get(round) ?? 0) + p.points);
+    roundMap.set(round, (roundMap.get(round) ?? 0) + (p as any).points);
   }
 
   const total_predictions = exact_predictions + winner_predictions + wrong_predictions;
@@ -69,26 +69,26 @@ export async function GET(
     .map((r) => ({ round: r, points: roundMap.get(r) ?? 0 }));
 
   // Get rank from leaderboard calculation
-  const { data: allUsers } = await supabase
+  const { data: allUsers } = await (supabase as any)
     .from('users')
     .select('id')
     .eq('role', 'user');
 
-  const { data: allPredictions } = await supabase
+  const { data: allPredictions } = await (supabase as any)
     .from('predictions')
     .select('user_id, points')
     .not('points', 'is', null);
 
   const pointsMap = new Map<string, number>();
   for (const p of allPredictions ?? []) {
-    pointsMap.set(p.user_id, (pointsMap.get(p.user_id) ?? 0) + (p.points ?? 0));
+    pointsMap.set((p as any).user_id, (pointsMap.get((p as any).user_id) ?? 0) + ((p as any).points ?? 0));
   }
 
   const sorted = (allUsers ?? [])
-    .map((u) => ({ id: u.id, pts: pointsMap.get(u.id) ?? 0 }))
+    .map((u) => ({ id: (u as any).id, pts: pointsMap.get((u as any).id) ?? 0 }))
     .sort((a, b) => b.pts - a.pts);
 
-  const rank = sorted.findIndex((u) => u.id === userId) + 1;
+  const rank = sorted.findIndex((u) => (u as any).id === userId) + 1;
 
   return NextResponse.json({
     exact_predictions,

@@ -12,7 +12,7 @@ export async function GET(
 
   const { userId } = params;
 
-  const { data, error } = await supabase
+  const { data, error } = await (supabase as any)
     .from('achievements')
     .select('*')
     .eq('user_id', userId)

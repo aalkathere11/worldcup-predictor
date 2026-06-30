@@ -8,7 +8,7 @@ export async function GET() {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   // Aggregate points per user from predictions where points are calculated
-  const { data: predictions, error } = await supabase
+  const { data: predictions, error } = await (supabase as any)
     .from('predictions')
     .select('user_id, points, score_a, score_b')
     .not('points', 'is', null);
@@ -16,7 +16,7 @@ export async function GET() {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   // Fetch all users
-  const { data: users } = await supabase
+  const { data: users } = await (supabase as any)
     .from('users')
     .select('id, full_name, nickname, avatar_url')
     .eq('role', 'user');
@@ -33,8 +33,8 @@ export async function GET() {
   }>();
 
   for (const pred of predictions ?? []) {
-    if (!statsMap.has(pred.user_id)) {
-      statsMap.set(pred.user_id, {
+    if (!statsMap.has((pred as any).user_id)) {
+      statsMap.set((pred as any).user_id, {
         total_points: 0,
         exact_predictions: 0,
         winner_predictions: 0,
@@ -42,18 +42,18 @@ export async function GET() {
         total_predictions: 0,
       });
     }
-    const s = statsMap.get(pred.user_id)!;
+    const s = statsMap.get((pred as any).user_id)!;
     s.total_predictions++;
-    if (pred.points === 2) s.exact_predictions++;
-    else if (pred.points === 1) s.winner_predictions++;
+    if ((pred as any).points === 2) s.exact_predictions++;
+    else if ((pred as any).points === 1) s.winner_predictions++;
     else s.wrong_predictions++;
-    s.total_points += pred.points ?? 0;
+    s.total_points += (pred as any).points ?? 0;
   }
 
   // Build leaderboard
   const leaderboard = users
     .map((u) => {
-      const s = statsMap.get(u.id) ?? {
+      const s = statsMap.get((u as any).id) ?? {
         total_points: 0,
         exact_predictions: 0,
         winner_predictions: 0,
@@ -67,10 +67,10 @@ export async function GET() {
             )
           : 0;
       return {
-        user_id: u.id,
-        full_name: u.full_name,
-        nickname: u.nickname,
-        avatar_url: u.avatar_url,
+        user_id: (u as any).id,
+        full_name: (u as any).full_name,
+        nickname: (u as any).nickname,
+        avatar_url: (u as any).avatar_url,
         ...s,
         accuracy,
         rank: 0,

@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
   // Cache-bust with timestamp
   const avatarUrl = `${publicUrl}?t=${Date.now()}`;
 
-  const { error: updateError } = await supabase
+  const { error: updateError } = await (supabase as any)
     .from('users')
     .update({
       avatar_url: avatarUrl,

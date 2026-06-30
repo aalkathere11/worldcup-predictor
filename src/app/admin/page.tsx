@@ -109,7 +109,7 @@ function AdminUsersTab() {
     if (!confirm(t('admin.confirm_delete'))) return;
     try {
       await adminDeleteUser(userId);
-      setUsers((prev) => prev.filter((u) => u.id !== userId));
+      setUsers((prev) => prev.filter((u) => (u as any).id !== userId));
       toast.success(t('admin.user_deleted'));
     } catch {
       toast.error(t('errors.generic'));
@@ -165,26 +165,26 @@ function AdminUsersTab() {
           ? [1, 2, 3].map((i) => <Skeleton key={i} className="h-16 rounded-xl" />)
           : users.map((u) => (
               <div
-                key={u.id}
+                key={(u as any).id}
                 className="card flex items-center gap-3 p-3"
               >
-                <Avatar src={u.avatar_url} name={u.full_name} size="sm" />
+                <Avatar src={(u as any).avatar_url} name={(u as any).full_name} size="sm" />
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-sm text-slate-800 dark:text-slate-100 truncate">
-                    {u.full_name}
+                    {(u as any).full_name}
                   </p>
                   <p className="text-xs text-slate-400 truncate">{u.email}</p>
                 </div>
                 <div className="flex gap-1.5">
                   <button
-                    onClick={() => handleResetPassword(u.id)}
+                    onClick={() => handleResetPassword((u as any).id)}
                     className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-600 flex items-center justify-center"
                     title={t('admin.reset_password')}
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                   </button>
                   <button
-                    onClick={() => handleDelete(u.id)}
+                    onClick={() => handleDelete((u as any).id)}
                     className="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/40 text-red-600 flex items-center justify-center"
                     title={t('admin.delete_user')}
                   >

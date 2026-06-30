@@ -38,8 +38,8 @@ export default function LoginPage() {
     }
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
-      const { data: profile } = await supabase
-        .from('users')
+      const { data: profile } = await (supabase as any)
+    .from('users')
         .select('force_password_change, force_avatar_upload')
         .eq('id', user.id)
         .single();

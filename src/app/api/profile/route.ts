@@ -7,7 +7,7 @@ export async function GET() {
 
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { data, error } = await supabase
+  const { data, error } = await (supabase as any)
     .from('users')
     .select('*')
     .eq('id', user.id)
@@ -29,7 +29,7 @@ export async function PATCH(req: NextRequest) {
   // Sanitize nickname
   const sanitized = nickname?.trim().slice(0, 20) ?? null;
 
-  const { data, error } = await supabase
+  const { data, error } = await (supabase as any)
     .from('users')
     .update({
       nickname: sanitized,

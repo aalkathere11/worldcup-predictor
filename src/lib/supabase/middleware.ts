@@ -39,8 +39,8 @@ export async function updateSession(request: NextRequest) {
 
   // If logged in but needs setup
   if (user && !isPublicPath && request.nextUrl.pathname !== '/auth/setup') {
-    const { data: profile } = await supabase
-      .from('users')
+    const { data: profile } = await (supabase as any)
+    .from('users')
       .select('force_password_change, force_avatar_upload')
       .eq('id', user.id)
       .single();

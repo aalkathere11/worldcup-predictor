@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const round = searchParams.get('round');
 
-  let query = supabase
+  let query = (supabase as any)
     .from('matches')
     .select('*')
     .order('kickoff_at', { ascending: true });

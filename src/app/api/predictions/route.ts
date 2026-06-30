@@ -8,7 +8,7 @@ export async function GET() {
 
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { data, error } = await supabase
+  const { data, error } = await (supabase as any)
     .from('predictions')
     .select('*')
     .eq('user_id', user.id)
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Fetch the match to check lock status and knockout draw rule
-  const { data: match, error: matchError } = await supabase
+  const { data: match, error: matchError } = await (supabase as any)
     .from('matches')
     .select('kickoff_at, round')
     .eq('id', match_id)
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Upsert prediction
-  const { data: prediction, error: upsertError } = await supabase
+  const { data: prediction, error: upsertError } = await (supabase as any)
     .from('predictions')
     .upsert(
       {
@@ -85,7 +85,7 @@ async function grantAchievementIfNew(
   userId: string,
   badgeKey: string
 ) {
-  const { data: existing } = await supabase
+  const { data: existing } = await (supabase as any)
     .from('achievements')
     .select('id')
     .eq('user_id', userId)
@@ -93,8 +93,8 @@ async function grantAchievementIfNew(
     .single();
 
   if (!existing) {
-    await supabase
-      .from('achievements')
+    await (supabase as any)
+    .from('achievements')
       .insert({ user_id: userId, badge_key: badgeKey });
   }
 }

@@ -13,7 +13,7 @@ export async function GET() {
   const admin = await requireAdmin(supabase);
   if (!admin) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
-  const { data, error } = await supabase
+  const { data, error } = await (supabase as any)
     .from('users')
     .select('id, email, full_name, nickname, avatar_url, role, created_at, force_password_change, force_avatar_upload')
     .order('created_at', { ascending: true });

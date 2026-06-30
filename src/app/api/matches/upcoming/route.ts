@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
 
   const now = new Date().toISOString();
 
-  const { data, error } = await supabase
+  const { data, error } = await (supabase as any)
     .from('matches')
     .select('*')
     .gte('kickoff_at', now)
